@@ -5,10 +5,10 @@
 #include "dice_menu.h"
 #include "dice.h"
 
-Window dice_select_window;
-SimpleMenuLayer dice_menu_layer;
-SimpleMenuSection dice_menu_sections[1];
-SimpleMenuItem dice_menu_section0_items[6];
+static Window dice_select_window;
+static SimpleMenuLayer dice_menu_layer;
+static SimpleMenuSection dice_menu_sections[1];
+static SimpleMenuItem dice_menu_section0_items[6];
 
 void dice_window_load(Window *window);
 void dice_window_unload(Window *window);

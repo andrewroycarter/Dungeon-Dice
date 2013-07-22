@@ -4,8 +4,8 @@
 
 #include "dice.h"
 
-Window dice_window;
-TextLayer dice_number_text_layer;
+static Window dice_window;
+static TextLayer dice_number_text_layer;
 static char display_text[32];
 
 int max_dice_number = 0;
