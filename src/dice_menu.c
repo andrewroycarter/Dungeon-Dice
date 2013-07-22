@@ -24,7 +24,7 @@ void dice_select_window_load(Window *window) {
                         &dice_select_window,
                         dice_menu_sections,
                         sizeof(dice_menu_sections) / sizeof(dice_menu_sections[0]),
-                        dice_menu_layer_select_callback);
+                        NULL);
   layer_add_child(root_layer, &dice_menu_layer.menu.scroll_layer.layer);
 
 }
@@ -41,7 +41,39 @@ void display_dice_menu() {
 
 void dice_menu_layer_select_callback(int index, void *context)
 {
-  display_dice(index);
+  int dice_num = 0;
+
+  switch (index)
+  {
+    case 0:
+      dice_num = 4;
+    break;
+    
+    case 1:
+      dice_num = 6;
+    break;
+
+    case 2:
+      dice_num = 8;
+    break;
+
+    case 3:
+      dice_num = 10;
+    break;
+
+    case 4:
+      dice_num = 12;
+    break;
+
+    case 5:
+      dice_num = 20;
+    break;
+
+    default:
+    break;
+  }
+
+  display_dice(dice_num);
 }
 
 void setup_datasource() {
