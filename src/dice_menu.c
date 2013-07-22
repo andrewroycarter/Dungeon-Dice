@@ -3,6 +3,7 @@
 #include "pebble_fonts.h"
 
 #include "dice_menu.h"
+#include "dice.h"
 
 Window dice_select_window;
 SimpleMenuLayer dice_menu_layer;
@@ -15,11 +16,20 @@ void setup_dice_select_window();
 void dice_menu_layer_select_callback(int index, void *context);
 void setup_datasource();
 
-void dice_window_load(Window *window) {
+void dice_select_window_load(Window *window) {
+
+  Layer *root_layer = window_get_root_layer(&dice_select_window);
+  simple_menu_layer_init(&dice_menu_layer,
+                        layer_get_bounds(root_layer),
+                        &dice_select_window,
+                        dice_menu_sections,
+                        sizeof(dice_menu_sections) / sizeof(dice_menu_sections[0]),
+                        dice_menu_layer_select_callback);
+  layer_add_child(root_layer, &dice_menu_layer.menu.scroll_layer.layer);
 
 }
 
-void dice_window_unload(Window *window) {
+void dice_select_window_unload(Window *window) {
 
 }
 
@@ -31,7 +41,7 @@ void display_dice_menu() {
 
 void dice_menu_layer_select_callback(int index, void *context)
 {
-   APP_LOG(APP_LOG_LEVEL_DEBUG, "Multi-Click: count:%u", index);
+  display_dice(index);
 }
 
 void setup_datasource() {
@@ -78,17 +88,8 @@ void setup_dice_select_window() {
 
   window_init(&dice_select_window, "Select Dice");
   window_set_window_handlers(&dice_select_window, (WindowHandlers){
-    .load = dice_window_load,
-    .unload = dice_window_unload,
+    .load = dice_select_window_load,
+    .unload = dice_select_window_unload,
   });
-
-  Layer *root_layer = window_get_root_layer(&dice_select_window);
-  simple_menu_layer_init(&dice_menu_layer,
-                        layer_get_bounds(root_layer),
-                        &dice_select_window,
-                        dice_menu_sections,
-                        sizeof(dice_menu_sections) / sizeof(dice_menu_sections[0]),
-                        dice_menu_layer_select_callback);
-  layer_add_child(root_layer, &dice_menu_layer.menu.scroll_layer.layer);
 
 }
