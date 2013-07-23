@@ -8,7 +8,7 @@ static Window dice_window;
 static TextLayer dice_number_text_layer;
 static TextLayer dice_type_text_layer;
 static Dice_Type current_dice_type;
-static int dice_type_to_dice_number[] = {4, 8, 10, 12, 20};
+static int dice_type_to_dice_number[] = {4, 6, 8, 10, 12, 20};
 
 typedef enum {
 
@@ -52,24 +52,18 @@ void dice_down_single_click_handler(ClickRecognizerRef recognizer, Window *windo
 void select_dice(Dice_Select_Direction direction) {
 
   int index = (int)current_dice_type;
+  int delta = direction == Dice_Select_Direction_Up ? -1 : 1;
 
-  switch (direction)
-  {
-    case Dice_Select_Direction_Down:
-    {
-      index += 1;
-      if (index > (uint)sizeof(dice_type_to_dice_number) / dice_type_to_dice_number[0]) {
+  index += delta;
+  if (index >= (int)(sizeof(dice_type_to_dice_number) / dice_type_to_dice_number[0])) {
+  
         index = 0;
-      }
-    }
-    break;
+  
+  }
+  else if (index < 0) {
 
-    case Dice_Select_Direction_Up:
-
-    break;
-
-    default:
-    break;
+    index = (int)(sizeof(dice_type_to_dice_number) / dice_type_to_dice_number[0]) - 1;
+  
   }
 
   current_dice_type = (Dice_Type)index;

@@ -3,6 +3,7 @@
 
 typedef enum {
 	Dice_Type_D4 = 0,
+	Dice_Type_D6,
 	Dice_Type_D8,
 	Dice_Type_D10,
 	Dice_Type_D12,
