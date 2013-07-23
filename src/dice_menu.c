@@ -9,6 +9,8 @@ static Window dice_select_window;
 static SimpleMenuLayer dice_menu_layer;
 static SimpleMenuSection dice_menu_sections[1];
 static SimpleMenuItem dice_menu_section0_items[6];
+static const int no_index = -1;
+static int appear_selection_index = -1;
 
 void dice_window_load(Window *window);
 void dice_window_unload(Window *window);
@@ -16,6 +18,7 @@ void setup_dice_select_window();
 void dice_menu_layer_select_callback(int index, void *context);
 void setup_datasource();
 void dice_select_window_appear(Window *window);
+void dice_selection_changed(Dice_Type dice_type);
 
 void dice_select_window_load(Window *window) {
     
@@ -37,7 +40,12 @@ void dice_select_window_unload(Window *window) {
 
 void dice_select_window_appear(Window *window) {
 
-  simple_menu_layer_set_selected_index(&dice_menu_layer, simple_menu_layer_get_selected_index(&dice_menu_layer), true);
+  if (appear_selection_index != no_index) {
+    
+    simple_menu_layer_set_selected_index(&dice_menu_layer, appear_selection_index, true);
+    appear_selection_index = no_index;
+
+  }
 
 }
 
@@ -51,7 +59,7 @@ void display_dice_menu() {
 
 void dice_selection_changed(Dice_Type dice_type) {
 
-  simple_menu_layer_set_selected_index(&dice_menu_layer, (int)dice_type, false);
+  appear_selection_index = (int)dice_type;
 
 }
 
