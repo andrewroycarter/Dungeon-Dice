@@ -41,39 +41,7 @@ void display_dice_menu() {
 
 void dice_menu_layer_select_callback(int index, void *context)
 {
-  int dice_num = 0;
-
-  switch (index)
-  {
-    case 0:
-      dice_num = 4;
-    break;
-    
-    case 1:
-      dice_num = 6;
-    break;
-
-    case 2:
-      dice_num = 8;
-    break;
-
-    case 3:
-      dice_num = 10;
-    break;
-
-    case 4:
-      dice_num = 12;
-    break;
-
-    case 5:
-      dice_num = 20;
-    break;
-
-    default:
-    break;
-  }
-
-  display_dice(dice_num);
+  display_dice((Dice_Type)index);
 }
 
 void setup_datasource() {

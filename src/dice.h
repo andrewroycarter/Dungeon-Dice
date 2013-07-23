@@ -1,7 +1,15 @@
 #ifndef _dice_h
 #define _dice_h
 
+typedef enum {
+	Dice_Type_D4 = 0,
+	Dice_Type_D8,
+	Dice_Type_D10,
+	Dice_Type_D12,
+	Dice_Type_D20,
+}	Dice_Type;
+
 // init and push dice window to stack
-void display_dice(int max_dice_number);
+void display_dice(Dice_Type dice_type);
 
 #endif
