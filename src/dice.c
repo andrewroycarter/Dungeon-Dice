@@ -6,7 +6,7 @@
 
 static Window dice_window;
 static TextLayer dice_number_text_layer;
-static char display_text[32];
+static TextLayer dice_type_text_layer;
 
 int max_dice_number = 0;
 
@@ -16,6 +16,8 @@ void setup_dice_window();
 void roll_dice(int max);
 void dice_config_provider(ClickConfig **config, Window *window);
 void dice_select_single_click_handler(ClickRecognizerRef recognizer, Window *window);
+void set_dice_type_text_layer_text(int max);
+
 
 void dice_config_provider(ClickConfig **config, Window *window) {
 
@@ -40,13 +42,28 @@ void dice_window_load(Window *window) {
   text_layer_set_font(&dice_number_text_layer, fonts_get_system_font(FONT_KEY_BITHAM_42_MEDIUM_NUMBERS));
   layer_add_child(root_layer, (Layer *)&dice_number_text_layer);
 
+  text_layer_init(&dice_type_text_layer, GRect(0, 0, root_layer_bounds.size.w, 25));  
+  text_layer_set_text_alignment(&dice_type_text_layer, GTextAlignmentCenter);
+  text_layer_set_font(&dice_type_text_layer, fonts_get_system_font(FONT_KEY_ROBOTO_CONDENSED_21));
+  set_dice_type_text_layer_text(max_dice_number);
+  layer_add_child(root_layer, (Layer *)&dice_type_text_layer);
+
   roll_dice(max_dice_number);
+}
+
+void set_dice_type_text_layer_text(int max) {
+  
+  static char dice_type_text[32];
+  snprintf(dice_type_text, sizeof(dice_type_text), "d%d", max);
+  text_layer_set_text(&dice_type_text_layer, dice_type_text);
+
 }
 
 void roll_dice(int max) {
 
   srand(time(NULL));
   int roll = (rand() % max_dice_number) + 1;
+  static char display_text[32];
   snprintf(display_text, sizeof(display_text), "%d", roll);
   text_layer_set_text(&dice_number_text_layer, display_text);
   vibes_short_pulse();
