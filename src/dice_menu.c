@@ -15,6 +15,7 @@ void dice_window_unload(Window *window);
 void setup_dice_select_window();
 void dice_menu_layer_select_callback(int index, void *context);
 void setup_datasource();
+void dice_select_window_appear(Window *window);
 
 void dice_select_window_load(Window *window) {
     
@@ -34,6 +35,12 @@ void dice_select_window_unload(Window *window) {
 
 }
 
+void dice_select_window_appear(Window *window) {
+
+  simple_menu_layer_set_selected_index(&dice_menu_layer, simple_menu_layer_get_selected_index(&dice_menu_layer), true);
+
+}
+
 void display_dice_menu() {
     
 	setup_datasource();
@@ -44,7 +51,7 @@ void display_dice_menu() {
 
 void dice_selection_changed(Dice_Type dice_type) {
 
-  simple_menu_layer_set_selected_index(&dice_menu_layer, (int)dice_type, true);
+  simple_menu_layer_set_selected_index(&dice_menu_layer, (int)dice_type, false);
 
 }
 
@@ -99,6 +106,7 @@ void setup_dice_select_window() {
     window_set_window_handlers(&dice_select_window, (WindowHandlers){
         .load = dice_select_window_load,
         .unload = dice_select_window_unload,
+        .appear = dice_select_window_appear,
     });
     
 }
