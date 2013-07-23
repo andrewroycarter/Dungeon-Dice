@@ -9,6 +9,7 @@ static TextLayer dice_number_text_layer;
 static TextLayer dice_type_text_layer;
 static Dice_Type current_dice_type;
 static int dice_type_to_dice_number[] = {4, 6, 8, 10, 12, 20};
+static DiceSelectionChange dice_selection_change_callback = NULL;
 
 typedef enum {
 
@@ -40,13 +41,21 @@ void dice_config_provider(ClickConfig **config, Window *window) {
 void dice_up_single_click_handler(ClickRecognizerRef recognizer, Window *window) {
 
   select_dice(Dice_Select_Direction_Up);
+  if (dice_selection_change_callback != NULL)
+  {
+    dice_selection_change_callback(current_dice_type);
+  }
 
 }
 
 void dice_down_single_click_handler(ClickRecognizerRef recognizer, Window *window) {
 
   select_dice(Dice_Select_Direction_Down);
-
+  if (dice_selection_change_callback != NULL)
+  {
+    dice_selection_change_callback(current_dice_type);
+  }
+  
 }
 
 void select_dice(Dice_Select_Direction direction) {
@@ -124,9 +133,11 @@ void dice_window_unload(Window *window) {
 
 }
 
-void display_dice(Dice_Type dice_type)
+void display_dice(Dice_Type dice_type, DiceSelectionChange dice_selection_change)
 {
 	current_dice_type = dice_type;
+  dice_selection_change_callback = dice_selection_change;
+
 	setup_dice_window();
 	window_stack_push(&dice_window, true);
 }

@@ -30,7 +30,8 @@ void dice_select_window_load(Window *window) {
 }
 
 void dice_select_window_unload(Window *window) {
-    
+
+
 }
 
 void display_dice_menu() {
@@ -41,9 +42,15 @@ void display_dice_menu() {
     
 }
 
+void dice_selection_changed(Dice_Type dice_type) {
+
+  simple_menu_layer_set_selected_index(&dice_menu_layer, (int)dice_type, true);
+
+}
+
 void dice_menu_layer_select_callback(int index, void *context)
 {
-    display_dice((Dice_Type)index);
+    display_dice((Dice_Type)index, dice_selection_changed);
 }
 
 void setup_datasource() {

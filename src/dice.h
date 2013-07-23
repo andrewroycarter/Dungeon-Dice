@@ -10,7 +10,9 @@ typedef enum {
 	Dice_Type_D20,
 }	Dice_Type;
 
+typedef void (*DiceSelectionChange)(Dice_Type);
+
 // init and push dice window to stack
-void display_dice(Dice_Type dice_type);
+void display_dice(Dice_Type dice_type, DiceSelectionChange dice_selection_change);
 
 #endif
